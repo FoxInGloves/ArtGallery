@@ -16,7 +16,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 /*builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 .AddEntityFrameworkStores<ApplicationDbContext>();*/
 
-builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddErrorDescriber<RussianErrorDescriber>()
    .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -46,6 +46,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Arts}/{action=Index}/{id?}");
-//app.MapRazorPages();
+
+app.MapControllerRoute(
+    name: "Identity",
+    pattern: "{area:exists}/{controller=Identity}/{action=Register}/{id?}");
 
 app.Run();

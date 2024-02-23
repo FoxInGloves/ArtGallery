@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtGallery.Controllers;
 
+[Area("Identity")]
 public class IdentityController : Controller
 {
     // GET
-    /*public IActionResult Register()
+    public IActionResult Register()
     {
-        return View();
-    }*/
+        return View("Account/Register");
+    }
 }
