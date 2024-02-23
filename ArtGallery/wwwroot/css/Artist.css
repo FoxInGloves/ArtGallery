@@ -1,0 +1,29 @@
+﻿.artist-page__container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.artist-page__head {
+    display: inline-block;
+}
+
+.artist-page__avatar {
+    display: inline-block;
+    float: left;
+    margin-right: 30px;
+}
+
+.artist-page__main {
+    display: inline-block;
+    max-width: 550px;
+}
+
+.artist-page__title {
+    margin-bottom: 10px;
+}
+
+.artist-page__country {
+    margin-bottom: 15px;
+}

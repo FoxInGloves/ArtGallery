@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ArtGallery.Models.Structs.Art>
+
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <title>title</title>
+    <link rel="stylesheet" href="~/css/normalize.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/element.css" asp-append-version="true"/>
+    <script src="~/js/like-button.js"></script>
+</head>
+<body onload="like()">
+<div>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li class="horizontal-li">
+                <div class="element-block">
+                    <div class="element-block__image">
+                        <a asp-controller="Arts" asp-action="Picture">
+                            <img class="element-block__image" src="~/images/mini_9_val.jpg" alt="Картина"/>
+                        </a>
+                        <div class="element-block__like">
+                            <button class="heart">
+                                <div class="heart-flip"></div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="element-block__title">@item.ArtName</div>
+                    <div class="element-block__param">
+                        <div>
+                            <div class="element-block__artist">Художник:</div>
+                            <div class="element-block__artist">
+                                <a asp-controller="Arts" asp-action="Artist">@item.Author</a>
+                            </div>
+                        </div>
+                        <div class="element-block__size">
+                            Размер:
+                        </div>
+                        <div>
+                            <div class="element-block__price">Цена:</div>
+                            <div class="element-block__price">@item.ArtPrice</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+</body>
+</html>

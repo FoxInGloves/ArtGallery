@@ -1,0 +1,138 @@
+﻿.element-block {
+    display: block;
+    margin: 30px 10px 0 10px;
+    max-height: 200px;
+    max-width: 300px;
+}
+
+.element-block__image {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    
+    background: white;
+}
+
+.element-block__image img {
+    transition: 1s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 10px 10px 10px;
+}
+
+.element-block__image img:hover {
+    transform: scale(1.03);
+}
+
+.element-block__like {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 15px 22px 0 0;
+}
+
+.element-block__title {
+    display: block;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-weight: bold;
+    word-break: normal;
+}
+
+.element-block__param {
+    display: block;
+    margin-left: 10px;
+}
+
+.element-block__artist {
+    display: inline-block;
+    margin-top: 4px;
+    word-break: normal;
+}
+
+.element-block__size {
+    display: inline-block;
+    margin-top: 4px;
+}
+
+.element-block__price {
+    display: inline-block;
+    margin-top: 20px;
+    font-weight: bold;
+    word-break: normal;
+}
+
+
+
+
+
+
+
+
+.heart {
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    .heart-flip {
+        --base: 20px;
+        --duration: .6s;
+        --active: #ea4673;
+        --inactive: #d1d6ee;
+        width: var(--base);
+        height: calc(var(--base) + var(--base) / 2);
+        border-radius: calc(var(--base) / 2) calc(var(--base) / 2) 0 0;
+        position: relative;
+        transform-origin: 50% 66.66%;
+        transform-style: preserve-3d;
+        transform: rotate(var(--rotate, -45deg));
+        transition: background var(--duration), transform var(--duration) ease;
+        background: var(--heart-background, var(--inactive));
+        &:before,
+        &:after {
+            content: '';
+            width: calc(var(--base) / 2);
+            height: var(--base);
+            border-radius: var(--pseudo-border-radius, calc(var(--base) / 2) 0 0 calc(var(--base) / 2));
+            position: absolute;
+            left: var(--pseudo-left, -50%);
+            transform-origin: var(--pseudo-origin, 100%) 50%;
+            bottom: 0;
+            background: var(--heart-background, var(--inactive));
+            filter: brightness(var(--pseudo-filter, 50%));
+            transform: translateX(1%) rotateY(var(--pseudo-rotate, 90deg)) translateZ(0);
+            transition: background var(--duration), transform var(--duration) ease, filter var(--duration);
+        }
+        &:after {
+            --pseudo-border-radius: 0 calc(var(--base) / 2) calc(var(--base) / 2) 0;
+            --pseudo-left: 100%;
+            --pseudo-origin: 0;
+            filter: brightness(var(--pseudo-filter-second, 100%));
+            transform: translateX(-1%) rotateY(var(--pseudo-rotate-second, 0deg)) translateZ(0);
+        }
+    }
+    &.active {
+        .heart-flip {
+            --rotate: 45deg;
+            --pseudo-filter: 100%;
+            --pseudo-filter-second: 50%;
+            --pseudo-rotate: 0deg;
+            --pseudo-rotate-second: 90deg;
+            --heart-background: var(--active);
+        }
+    }
+}
+
+.heart {
+    background: none;
+    border: none;
+    padding: 0;
+    transform: scale(var(--button-scale, 1)) translateZ(0);
+    transition: transform .2s;
+    &:active {
+        --button-scale: .95;
+    }
+}
