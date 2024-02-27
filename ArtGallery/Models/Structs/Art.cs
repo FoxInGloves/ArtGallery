@@ -1,10 +1,12 @@
 ﻿namespace ArtGallery.Models.Structs;
 
-public class Art(string artName, string? artPrice, string author)
+public class Art
 {
-    public string? ArtName { get; set; } = artName;
+    public string Id { get; set; }
+    
+    public string? ArtName { get; set; }
 
-    public string? ArtPrice { get; set; } = artPrice;
+    public string? ArtPrice { get; set; }
 
-    public string? Author { get; set; } = author;
+    public string? Author { get; set; }
 }

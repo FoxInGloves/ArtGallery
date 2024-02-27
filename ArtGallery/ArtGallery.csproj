@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Areas\Identity\Pages\Account\Views\" />
+      <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Views\Home\Index.cshtml" />
     </ItemGroup>
 
 </Project>

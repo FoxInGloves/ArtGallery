@@ -112,6 +112,9 @@ namespace ArtGallery.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Name, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                
+                //TODO Сделать собственную валидацию имени, что бы использовать одинаковые имена.
+                //TODO Сделать валидацию Email, чтобы не было одинаковых
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)

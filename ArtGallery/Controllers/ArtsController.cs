@@ -23,10 +23,10 @@ public class ArtsController : Controller
         return View();
     }
 
-    public IActionResult Register()
+    /*public IActionResult Register()
     {
         return View("~/Areas/Identity/Pages/Account/Register.cshtml");
-    }
+    }*/
 
     private IEnumerable<Art> GetArts()
     {
@@ -34,7 +34,12 @@ public class ArtsController : Controller
         
         for (var i = 0; i < 35; i++)
         {
-            arts.Add(new Art("9 вал", "1000$", "Иван Айвазовский"));
+            arts.Add(new Art
+            {
+                ArtName = "9 вал", 
+                ArtPrice = "1000$", 
+                Author = "Иван Айвазовский"
+            });
         }
 
         return arts;

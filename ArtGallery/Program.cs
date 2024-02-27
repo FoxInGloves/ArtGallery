@@ -11,14 +11,26 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-/*builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-.AddEntityFrameworkStores<ApplicationDbContext>();*/
-
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+    {
+        options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz" +
+                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                                                 "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" +
+                                                 "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
+                                                 "0123456789" +
+                                                 "-._@+";
+        options.SignIn.RequireConfirmedAccount = true;
+    })
+    .AddRoles<IdentityRole>()
     .AddErrorDescriber<RussianErrorDescriber>()
-   .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+/*builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddErrorDescriber<RussianErrorDescriber>()
+   .AddEntityFrameworkStores<ApplicationDbContext>();*/
 
 builder.Services.AddControllersWithViews();
 
@@ -42,13 +54,21 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
+
+/*app.MapControllerRoute(
+    name: "IdentityArea",
+    pattern: "{area:exists}/{controller=Account}/{action=Index}/{id?}");*/
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Arts}/{action=Index}/{id?}");
 
-app.MapControllerRoute(
-    name: "Identity",
-    pattern: "{area:exists}/{controller=Identity}/{action=Register}/{id?}");
+/*app.MapAreaControllerRoute(
+    name: "IdentityArea",
+    areaName: "Identity",
+    pattern: "Identity/{controller=Account}/{action=Index}/{id?}");*/
+
+app.MapRazorPages();
 
 app.Run();
