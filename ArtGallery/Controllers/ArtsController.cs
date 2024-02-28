@@ -1,4 +1,5 @@
-﻿using ArtGallery.Models;
+﻿using System.Diagnostics;
+using ArtGallery.Models;
 using ArtGallery.Models.Structs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,13 +7,21 @@ namespace ArtGallery.Controllers;
 
 public class ArtsController : Controller
 {
+    private readonly ILogger<ArtsController> _logger;
+
+    public ArtsController(ILogger<ArtsController> logger)
+    {
+        _logger = logger;
+    }
+    
     public IActionResult Index()
     {
         var arts = GetArts();
         
         return View(arts);
     }
-
+//1535px max width
+    
     public IActionResult Artist(string idArt)
     {
         return View();
@@ -23,10 +32,17 @@ public class ArtsController : Controller
         return View();
     }
 
-    /*public IActionResult Register()
+    public IActionResult Main()
     {
-        return View("~/Areas/Identity/Pages/Account/Register.cshtml");
-    }*/
+        var arts = GetArts(12);
+        
+        return View(arts);
+    }
+    
+    public IActionResult Privacy()
+    {
+        return View();
+    }
 
     private IEnumerable<Art> GetArts()
     {
@@ -36,12 +52,35 @@ public class ArtsController : Controller
         {
             arts.Add(new Art
             {
-                ArtName = "9 вал", 
-                ArtPrice = "1000$", 
+                Name = "9 вал", 
+                Price = "1000$", 
                 Author = "Иван Айвазовский"
             });
         }
 
         return arts;
+    }
+
+    private IEnumerable<Art> GetArts(int count)
+    {
+        var arts = new List<Art>();
+
+        for (var i = 0; i < count; i++)
+        {
+            arts.Add(new Art
+            {
+                Name = "9 вал", 
+                Price = "1000$", 
+                Author = "Иван Айвазовский"
+            });
+        }
+
+        return arts;
+    }
+    
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

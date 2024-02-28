@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ArtGallery.Data;
 using ArtGallery.Models.Describers;
-using ArtGallery.Models.Structs;
 
 var builder = WebApplication.CreateBuilder(args);
 

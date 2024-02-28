@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ArtGallery.Models.Structs.Art>
+
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="~/css/normalize.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/Main-page.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/element.css" asp-append-version="true"/>
+</head>
+<body>
+<div>
+    <div class="main-page__banner">
+        @*<img class="main-page__img" src="~/images/banner/banner_1.jpg"/>
+        <img class="main-page__img" src="~/images/banner/banner_2.jpg"/>
+        <img class="main-page__img" src="~/images/banner/banner_3.jpg"/>*@
+    </div>
+    
+        <ul id="c"> 
+            @foreach (var art in Model)
+            {
+                <li>
+                    <div class="element-block">
+                        <div class="element-block__image">
+                            <a asp-controller="Arts" asp-action="Picture">
+                                <img class="element-block__image" src="~/images/mini_9_val.jpg" alt="Картина"/>
+                            </a>
+                            <div class="element-block__like">
+                                <button class="heart">
+                                    <div class="heart-flip"></div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="element-block__title">@art.Name</div>
+                    </div>
+                </li>
+            }
+        </ul>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/main-page-carousel.js"></script>
+</div>
+</body>
+</html>
