@@ -11,19 +11,28 @@
     <link rel="stylesheet" href="~/css/normalize.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/Main-page.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/element.css" asp-append-version="true"/>
+    <script src="~/js/like-button.js"></script>
 </head>
-<body>
+<body onload="like()">
 <div>
+    
     <div class="main-page__banner">
-        @*<img class="main-page__img" src="~/images/banner/banner_1.jpg"/>
+        <img class="main-page__img" src="~/images/banner/banner_1.jpg"/>
         <img class="main-page__img" src="~/images/banner/banner_2.jpg"/>
-        <img class="main-page__img" src="~/images/banner/banner_3.jpg"/>*@
+        <img class="main-page__img" src="~/images/banner/banner_3.jpg"/>
+    </div>
+    <div class="main-page__title">
+        <strong>Популярные жанры</strong>
     </div>
     
-        <ul id="c"> 
+    <div class="main-page__title">
+        <strong>Новинки (пока без анимации)</strong>
+    </div>
+    <div>
+        <ul>
             @foreach (var art in Model)
             {
-                <li>
+                <li class="horizontal-li">
                     <div class="element-block">
                         <div class="element-block__image">
                             <a asp-controller="Arts" asp-action="Picture">
@@ -36,13 +45,27 @@
                             </div>
                         </div>
                         <div class="element-block__title">@art.Name</div>
+                        <div class="element-block__param">
+                            <div>
+                                <div class="element-block__artist">Художник:</div>
+                                <div class="element-block__artist">
+                                    <a asp-controller="Arts" asp-action="Artist">@art.Author</a>
+                                </div>
+                            </div>
+                            <div class="element-block__size">
+                                Размер:
+                            </div>
+                            <div>
+                                <div class="element-block__price">Цена:</div>
+                                <div class="element-block__price">@art.Price</div>
+                            </div>
+                        </div>
                     </div>
+                    <hr/>
                 </li>
             }
         </ul>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/main-page-carousel.js"></script>
+    </div>
 </div>
 </body>
 </html>

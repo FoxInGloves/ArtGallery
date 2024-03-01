@@ -1,39 +1,25 @@
-﻿var timer = 10000;
+﻿var $item = $('.carousel .item');
+var $wHeight = $(window).height();
+$item.eq(0).addClass('active');
+$item.height($wHeight);
+$item.addClass('full-screen');
 
-console.log("Начало");
+$('.carousel img').each(function() {
+    var $src = $(this).attr('src');
+    var $color = $(this).attr('data-color');
+    $(this).parent().css({
+        'background-image' : 'url(' + $src + ')',
+        'background-color' : $color
+    });
+    $(this).remove();
+});
 
-var i = 0;
-var max = $('#c > li').length;
+$(window).on('resize', function (){
+    $wHeight = $(window).height();
+    $item.height($wHeight);
+});
 
-$("#c > li").eq(i).addClass('active').css('left','0');
-$("#c > li").eq(i + 1).addClass('active').css('left','25%');
-$("#c > li").eq(i + 2).addClass('active').css('left','50%');
-$("#c > li").eq(i + 3).addClass('active').css('left','75%');
-
-
-setInterval(function(){
-
-    console.log("Вызов функции");
-    $("#c > li").removeClass('active');
-
-    $("#c > li").eq(i).css('transition-delay','0.25s');
-    $("#c > li").eq(i + 1).css('transition-delay','0.5s');
-    $("#c > li").eq(i + 2).css('transition-delay','0.75s');
-    $("#c > li").eq(i + 3).css('transition-delay','1s');
-
-    if (i < max-4) {
-        i = i+4;
-        console.log("if");
-    }
-
-    else {
-        i = 0;
-        console.log("else");
-    }
-
-    $("#c > li").eq(i).css('left','0').addClass('active').css('transition-delay','1.25s');
-    $("#c > li").eq(i + 1).css('left','25%').addClass('active').css('transition-delay','1.5s');
-    $("#c > li").eq(i + 2).css('left','50%').addClass('active').css('transition-delay','1.75s');
-    $("#c > li").eq(i + 3).css('left','75%').addClass('active').css('transition-delay','2s');
-
-}, timer);
+$('.carousel').carousel({
+    interval: 6000,
+    pause: "false"
+});

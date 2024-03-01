@@ -1,32 +1,38 @@
-﻿.horizontal-li {
+﻿.container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.horizontal-li {
     display: inline-block;
     flex-wrap: wrap;
     margin-top: 20px;
+    border-radius: 10px;
 }
 
 .element-block {
     display: block;
-    margin: 30px 10px 0 10px;
-    max-height: 200px;
-    max-width: 300px;
+    margin: 30px 20px 0 20px;
+}
+
+.horizontal-li:hover {
+    box-shadow: 0 0 15px 1px #9c9c9c;
 }
 
 .element-block__image {
     position: relative;
-    display: block;
+    display: inline-block;
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
-    
-    background: white;
 }
 
 .element-block__image img {
-    transition: 1s;
+    transition: 0.6s;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    padding: 10px 10px 10px 10px;
 }
 
 .element-block__image img:hover {
@@ -41,6 +47,7 @@
 }
 
 .element-block__title {
+    position: relative;
     display: block;
     margin-top: 10px;
     margin-left: 10px;
@@ -69,6 +76,7 @@
     margin-top: 20px;
     font-weight: bold;
     word-break: normal;
+    margin-bottom: 30px;
 }
 
 
