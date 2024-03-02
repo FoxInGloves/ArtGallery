@@ -15,9 +15,9 @@
     <script src="~/js/like-button.js"></script>
 </head>
 <body onload="like()">
-<div>
+<div class="container">
     <ul>
-        @foreach (var item in Model)
+        @foreach (var art in Model)
         {
             <li class="horizontal-li">
                 <div class="element-block">
@@ -31,12 +31,12 @@
                             </button>
                         </div>
                     </div>
-                    <div class="element-block__title">@item.ArtName</div>
+                    <div class="element-block__title">@art.Name</div>
                     <div class="element-block__param">
                         <div>
                             <div class="element-block__artist">Художник:</div>
                             <div class="element-block__artist">
-                                <a asp-controller="Arts" asp-action="Artist">@item.Author</a>
+                                <a asp-controller="Arts" asp-action="Artist">@art.Author</a>
                             </div>
                         </div>
                         <div class="element-block__size">
@@ -44,7 +44,7 @@
                         </div>
                         <div>
                             <div class="element-block__price">Цена:</div>
-                            <div class="element-block__price">@item.ArtPrice</div>
+                            <div class="element-block__price">@art.Price</div>
                         </div>
                     </div>
                 </div>

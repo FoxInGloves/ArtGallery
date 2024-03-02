@@ -20,9 +20,3 @@ html {
 body {
   margin-bottom: 60px;
 }
-
-.horizontal-li {
-  display: inline-block;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}

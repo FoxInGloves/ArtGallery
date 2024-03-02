@@ -1,0 +1,15 @@
+﻿.main-page__banner {
+    display: inline-flex;
+}
+
+.main-page__img {
+    height: 500px;
+}
+
+.main-page__title {
+    margin-top: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
