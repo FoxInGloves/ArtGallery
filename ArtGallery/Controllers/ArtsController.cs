@@ -34,7 +34,7 @@ public class ArtsController : Controller
 
     public IActionResult Main()
     {
-        var arts = GetArts(12);
+        var arts = GetArts(4);
         
         return View(arts);
     }

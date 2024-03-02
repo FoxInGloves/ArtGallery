@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ArtGallery.Data;
 using ArtGallery.Models.Describers;
+using ArtGallery.Models.Structs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,11 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString));
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+/*builder.Services.AddDefaultIdentity<User>(options =>
     {
         options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz" +
                                                  "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
@@ -25,11 +26,20 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     })
     .AddRoles<IdentityRole>()
     .AddErrorDescriber<RussianErrorDescriber>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>();*/
 
-/*builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+    {
+        options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz" +
+                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                                                 "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" +
+                                                 "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
+                                                 "0123456789" +
+                                                 "-._";
+        options.SignIn.RequireConfirmedAccount = true;
+    })
     .AddErrorDescriber<RussianErrorDescriber>()
-   .AddEntityFrameworkStores<ApplicationDbContext>();*/
+   .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultUI();
 
 builder.Services.AddControllersWithViews();
 
