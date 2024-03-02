@@ -38,6 +38,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                                                  "-._";
         options.SignIn.RequireConfirmedAccount = true;
     })
+    .AddDefaultTokenProviders()
     .AddErrorDescriber<RussianErrorDescriber>()
    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultUI();
 
