@@ -45,7 +45,8 @@ namespace ArtGallery.Areas.Identity.Pages.Account
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            StatusMessage = result.Succeeded ? "Спасибо за подтверждение вашего адреса электронной почты." : 
+                "Ошибка подтверждения электронной почты.";
             return Page();
         }
     }
