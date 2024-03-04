@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ArtGallery.Data;
 using ArtGallery.Models.Describers;
+using ArtGallery.Models.Managers;
 using ArtGallery.Models.Structs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,20 +15,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-/*builder.Services.AddDefaultIdentity<User>(options =>
-    {
-        options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz" +
-                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                                                 "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" +
-                                                 "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
-                                                 "0123456789" +
-                                                 "-._@+";
-        options.SignIn.RequireConfirmedAccount = true;
-    })
-    .AddRoles<IdentityRole>()
-    .AddErrorDescriber<RussianErrorDescriber>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();*/
-
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
         options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz" +
@@ -36,11 +23,14 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                                                  "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
                                                  "0123456789" +
                                                  "-._";
+        options.User.RequireUniqueEmail = true;
         options.SignIn.RequireConfirmedAccount = true;
     })
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultUI()
+    .AddSignInManager<ApplicationSignInManager<ApplicationUser>>()
     .AddDefaultTokenProviders()
-    .AddErrorDescriber<RussianErrorDescriber>()
-   .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultUI();
+    .AddErrorDescriber<RussianErrorDescriber>();
 
 builder.Services.AddControllersWithViews();
 

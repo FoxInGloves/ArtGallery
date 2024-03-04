@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using ArtGallery.Models.Managers;
 using ArtGallery.Models.Structs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
