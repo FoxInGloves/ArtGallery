@@ -22,17 +22,20 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                                                  "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" +
                                                  "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
                                                  "0123456789" +
-                                                 "-._";
+                                                 "-._@";
         options.User.RequireUniqueEmail = true;
-        options.SignIn.RequireConfirmedAccount = true;
+        options.SignIn.RequireConfirmedAccount = false;
     })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultUI()
-    .AddSignInManager<ApplicationSignInManager<ApplicationUser>>()
     .AddDefaultTokenProviders()
+    .AddSignInManager<ApplicationSignInManager<ApplicationUser>>()
     .AddErrorDescriber<RussianErrorDescriber>();
 
+//builder.Services.AddScoped<SignInManager<ApplicationUser>, ApplicationSignInManager<ApplicationUser>>();
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
