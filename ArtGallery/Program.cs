@@ -13,8 +13,6 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
         options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz" +
@@ -32,10 +30,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddSignInManager<ApplicationSignInManager<ApplicationUser>>()
     .AddErrorDescriber<RussianErrorDescriber>();
 
-//builder.Services.AddScoped<SignInManager<ApplicationUser>, ApplicationSignInManager<ApplicationUser>>();
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -56,8 +53,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 /*app.MapControllerRoute(
     name: "IdentityArea",

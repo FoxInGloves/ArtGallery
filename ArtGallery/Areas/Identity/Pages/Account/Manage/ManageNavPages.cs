@@ -4,6 +4,7 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace  ArtGallery.Areas.Identity.Pages.Account.Manage
 {
@@ -61,6 +62,8 @@ namespace  ArtGallery.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
+        public static string RoleManager => "RoleManager";
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -109,6 +112,8 @@ namespace  ArtGallery.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
 
+        public static string RoleManagerNavClass(ViewContext viewContext) => PageNavClass(viewContext, RoleManager);
+        
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
