@@ -1,4 +1,7 @@
+#nullable disable
+
 using System.ComponentModel.DataAnnotations;
+using Humanizer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,6 +20,7 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
         {
             _roleManager = roleManager;
             _logger = logger;
+            Console.WriteLine("Создание класса");
         }
         
         [TempData]
@@ -70,23 +74,18 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostDeleteAsync(string roleId)
         {
             //TODO как нибудь переписать LoadAsync
-            await LoadAsync();
+            //await LoadAsync();
             
             var role = await _roleManager.FindByIdAsync(roleId);
 
             if (role == null)
-            {
-                return NotFound($"Couldn't find role {roleId}");
-            }
-
-            if (!Roles.Contains(role))
             {
                 StatusMessage = "Error такой роли не существует!";
                 return Page();
             }
 
             await _roleManager.DeleteAsync(role);
-            StatusMessage = "Роль успешно удалена.";
+            StatusMessage = $"Роль '{role}' успешно удалена.";
             _logger.LogInformation("Role deleted");
             return RedirectToPage();
         }
