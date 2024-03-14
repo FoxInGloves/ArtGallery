@@ -1,6 +1,6 @@
 ﻿#nullable disable
 
-namespace ArtGallery.Models.Structs;
+namespace ArtGallery.Models.Structs.Entity;
 
 public class Art
 {

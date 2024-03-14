@@ -1,8 +1,13 @@
-﻿.container {
-    left: -30px;
+﻿.element-container {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: -80px;
+    margin-right: -80px;
+    background: white;
+    border-radius: 30px;
+}
+
+.element-ul {
+    margin-left: 20px;
 }
 
 .horizontal-li {
@@ -14,7 +19,7 @@
 
 .element-block {
     display: block;
-    margin: 30px 20px 0 20px;
+    margin: 30px 30px 0 30px;
 }
 
 .horizontal-li:hover {
@@ -30,10 +35,12 @@
 }
 
 .element-block__image img {
-    transition: 0.6s;
+    transition: 0.4s;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    height: 195px;
+    width: 285px;
 }
 
 .element-block__image img:hover {

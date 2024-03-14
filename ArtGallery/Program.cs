@@ -4,6 +4,7 @@ using ArtGallery.Data;
 using ArtGallery.Models.Describers;
 using ArtGallery.Models.Managers;
 using ArtGallery.Models.Structs;
+using ArtGallery.Models.Structs.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 

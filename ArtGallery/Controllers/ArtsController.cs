@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using ArtGallery.Models;
-using ArtGallery.Models.Structs;
+using ArtGallery.Models.Structs.Dto;
+using ArtGallery.Models.Structs.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtGallery.Controllers;
@@ -16,13 +17,19 @@ public class ArtsController : Controller
     
     public IActionResult Index()
     {
-        var arts = GetArts();
+        var viewModel = new MainPageViewModel()
+        {
+            Genres = GetGenres(5),
+
+            Arts = GetArts(4)
+        };
         
-        return View(arts);
+        var arts = GetArts(4);
+        
+        return View(viewModel);
     }
-//1535px max width
     
-    public IActionResult Artist(string idArt)
+    public IActionResult Artist(string idArtist)
     {
         return View();
     }
@@ -32,9 +39,9 @@ public class ArtsController : Controller
         return View();
     }
 
-    public IActionResult Main()
+    public IActionResult Catalog()
     {
-        var arts = GetArts(4);
+        var arts = GetArts(35);
         
         return View(arts);
     }
@@ -44,21 +51,20 @@ public class ArtsController : Controller
         return View();
     }
 
-    private IEnumerable<Art> GetArts()
+    private IEnumerable<GenreDto> GetGenres(int count)
     {
-        var arts = new List<Art>();
-        
-        for (var i = 0; i < 35; i++)
+        var genres = new List<GenreDto>();
+
+        for (var i = 0; i < count; i++)
         {
-            arts.Add(new Art
+            genres.Add(new GenreDto
             {
-                Name = "9 вал", 
-                Price = "1000$", 
-                Author = "Иван Айвазовский"
+                Name = "Морской пейзаж",
+                IconPath = "~/images/genres/sunset-ocean.png"
             });
         }
 
-        return arts;
+        return genres;
     }
 
     private IEnumerable<Art> GetArts(int count)

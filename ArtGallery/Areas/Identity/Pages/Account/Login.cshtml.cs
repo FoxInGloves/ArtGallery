@@ -5,6 +5,7 @@
 using System.ComponentModel.DataAnnotations;
 using ArtGallery.Models.Managers;
 using ArtGallery.Models.Structs;
+using ArtGallery.Models.Structs.Entity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

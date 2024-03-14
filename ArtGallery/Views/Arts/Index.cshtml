@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ArtGallery.Models.Structs.Art>
+﻿@model MainPageViewModel
 
 @{
     Layout = "_Layout";
@@ -8,49 +8,78 @@
 
 <html lang="ru">
 <head>
-    <title>title</title>
-    <link rel="stylesheet" href="~/css/normalize.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/element.css" asp-append-version="true"/>
     <script src="~/js/like-button.js"></script>
 </head>
 <body onload="like()">
 <div class="container">
-    <ul>
-        @foreach (var art in Model)
+    <div class="index__banner">
+        <img class="index__img" src="~/images/banner/banner_1.jpg"/>
+        <img class="index__img" src="~/images/banner/banner_2.jpg"/>
+        <img class="index__img" src="~/images/banner/banner_3.jpg"/>
+    </div>
+    <div class="index__title">
+        <strong><h2>Популярные жанры</h2></strong>
+    </div>
+    <div class="index-container">
+    <ul class="index-ul">
+        
+        @foreach (var genre in Model.Genres)
         {
-            <li class="horizontal-li">
-                <div class="element-block">
-                    <div class="element-block__image">
-                        <a asp-controller="Arts" asp-action="Picture">
-                            <img class="element-block__image" src="~/images/mini_9_val.jpg" alt="Картина"/>
+            <li class="index__li">
+                <div class="index__block">
+                    <div class="index__img-container">
+                        <a>
+                            <img class="index__genre__img" src="~/images/genres/sunset-ocean.png" alt="Картина"/>
+                            <h5 class="index-genre__name">@genre.Name</h5>
                         </a>
-                        <div class="element-block__like">
-                            <button class="heart">
-                                <div class="heart-flip"></div>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="element-block__title">@art.Name</div>
-                    <div class="element-block__param">
-                        <div>
-                            <div class="element-block__artist">Художник:</div>
-                            <div class="element-block__artist">
-                                <a asp-controller="Arts" asp-action="Artist">@art.Author</a>
-                            </div>
-                        </div>
-                        <div class="element-block__size">
-                            Размер:
-                        </div>
-                        <div>
-                            <div class="element-block__price">Цена:</div>
-                            <div class="element-block__price">@art.Price</div>
-                        </div>
                     </div>
                 </div>
             </li>
         }
     </ul>
+    </div>
+    <div class="index__title">
+        <strong>Новинки (пока без анимации)</strong>
+    </div>
+    <div class="element-container">
+        <ul>
+            @foreach (var art in Model.Arts)
+            {
+                <li class="horizontal-li">
+                    <div class="element-block">
+                        <div class="element-block__image">
+                            <a asp-controller="Arts" asp-action="Picture">
+                                <img class="element-block__image" src="~/images/mini_9_val.jpg" alt="Картина"/>
+                            </a>
+                            <div class="element-block__like">
+                                <button class="heart">
+                                    <div class="heart-flip"></div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="element-block__title">@art.Name</div>
+                        <div class="element-block__param">
+                            <div>
+                                <div class="element-block__artist">Художник:</div>
+                                <div class="element-block__artist">
+                                    <a asp-controller="Arts" asp-action="Artist">@art.Author</a>
+                                </div>
+                            </div>
+                            <div class="element-block__size">
+                                Размер:
+                            </div>
+                            <div>
+                                <div class="element-block__price">Цена:</div>
+                                <div class="element-block__price">@art.Price</div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
 </div>
 </body>
 </html>

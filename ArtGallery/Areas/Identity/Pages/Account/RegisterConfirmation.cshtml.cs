@@ -4,6 +4,7 @@
 
 using System.Text;
 using ArtGallery.Models.Structs;
+using ArtGallery.Models.Structs.Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
