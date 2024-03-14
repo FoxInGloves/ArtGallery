@@ -26,7 +26,6 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
         
-        //[BindProperty]
         public IList<IdentityRole> Roles { get; set; }
 
         [BindProperty]
@@ -86,7 +85,7 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
 
             await _roleManager.DeleteAsync(role);
             StatusMessage = $"Роль '{role}' успешно удалена.";
-            _logger.LogInformation("Role deleted");
+            _logger.LogInformation("RoleModel deleted");
             return RedirectToPage();
         }
         

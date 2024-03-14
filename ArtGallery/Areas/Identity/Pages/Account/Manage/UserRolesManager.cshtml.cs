@@ -22,9 +22,9 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
             _roleManager = roleManager;
         }
         
-        public IEnumerable<UserRoles> Users { get; set; }
+        public IEnumerable<UserRolesModel> UserRoles { get; set; }
         
-        public class UserRoles
+        public class UserRolesModel
         {
             public string UserId { get; set; }
             
@@ -38,11 +38,11 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
         public async Task LoadAsync()
         {
             var users = await  _userManager.Users.ToListAsync();
-            var userRoles = new List<UserRoles>();
+            var userRoles = new List<UserRolesModel>();
 
             foreach (var user in users)
             {
-                var userRole = new UserRoles()
+                var userRole = new UserRolesModel()
                 {
                     UserId = user.Id,
                     UserName = user.UserName,
@@ -52,7 +52,7 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
                 userRoles.Add(userRole);
             }
 
-            Users = userRoles;
+            UserRoles = userRoles;
         }
         
         public async Task<IActionResult> OnGet()

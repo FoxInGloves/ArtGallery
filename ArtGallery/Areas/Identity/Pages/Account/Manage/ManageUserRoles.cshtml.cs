@@ -21,9 +21,9 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
             _roleManager = roleManager;
         }
         
-        public IList<Role> UserRoles { get; set; }
+        public IList<RoleModel> Roles { get; set; }
         
-        public class Role()
+        public class RoleModel
         {
             public string RoleId { get; set; }
             
@@ -44,10 +44,10 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
                 //return View("NotFound");
             }
             //ViewBag.UserName = user.UserName;
-            var roles = new List<Role>();
+            var roles = new List<RoleModel>();
             foreach (var role in _roleManager.Roles)
             {
-                var userRolesViewModel = new Role()
+                var userRolesViewModel = new RoleModel()
                 {
                     RoleId = role.Id,
                     RoleName = role.Name
@@ -63,7 +63,7 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
                 roles.Add(userRolesViewModel);
             }
 
-            UserRoles = roles;
+            Roles = roles;
         }
         
         public async Task<IActionResult> OnGet(string userId)
@@ -72,7 +72,7 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string userId, IList<Role> userRoles)
+        public async Task<IActionResult> OnPostAsync(string userId, IList<RoleModel> userRoles)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
