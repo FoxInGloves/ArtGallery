@@ -1,13 +1,16 @@
 ﻿.element-container {
     display: block;
-    margin-left: -80px;
-    margin-right: -80px;
+    margin-left: -90px;
+    margin-right: -90px;
     background: white;
     border-radius: 30px;
 }
 
 .element-ul {
-    margin-left: 20px;
+    list-style: none;
+    text-align: center;
+    
+    padding-left: 0;
 }
 
 .horizontal-li {
@@ -39,8 +42,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    height: 195px;
-    width: 285px;
+    max-width: 285px;
 }
 
 .element-block__image img:hover {

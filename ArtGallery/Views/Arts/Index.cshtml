@@ -13,7 +13,7 @@
     <script src="~/js/like-button.js"></script>
 </head>
 <body onload="like()">
-<div class="container">
+<div>
     <div class="index__banner">
         <img class="index__img" src="~/images/banner/banner_1.jpg"/>
         <img class="index__img" src="~/images/banner/banner_2.jpg"/>
@@ -31,7 +31,7 @@
                 <div class="index__block">
                     <div class="index__img-container">
                         <a>
-                            <img class="index__genre__img" src="~/images/genres/sunset-ocean.png" alt="Картина"/>
+                            <img class="index__genre__img" src="~/images/genres/seascape.png" alt="Картина"/>
                             <h5 class="index-genre__name">@genre.Name</h5>
                         </a>
                     </div>
@@ -44,14 +44,14 @@
         <strong>Новинки (пока без анимации)</strong>
     </div>
     <div class="element-container">
-        <ul>
+        <ul class="element-ul">
             @foreach (var art in Model.Arts)
             {
                 <li class="horizontal-li">
                     <div class="element-block">
                         <div class="element-block__image">
                             <a asp-controller="Arts" asp-action="Picture">
-                                <img class="element-block__image" src="~/images/mini_9_val.jpg" alt="Картина"/>
+                                <img class="element-block__image" src="~/images/arts/devushka.jpg" alt="Картина"/>
                             </a>
                             <div class="element-block__like">
                                 <button class="heart">
@@ -64,7 +64,7 @@
                             <div>
                                 <div class="element-block__artist">Художник:</div>
                                 <div class="element-block__artist">
-                                    <a asp-controller="Arts" asp-action="Artist">@art.Author</a>
+                                    <a asp-controller="Arts" asp-action="Artist">@art.ArtistId</a>
                                 </div>
                             </div>
                             <div class="element-block__size">
