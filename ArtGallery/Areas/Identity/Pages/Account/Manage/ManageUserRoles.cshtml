@@ -6,8 +6,8 @@
 <form method="post">
     <div class="card">
         <div class="card-header">
-            <h2>Manage User RoleModels</h2>
-            Add/Remove RoleModels for User / @ViewBag.UserName.
+            <h2>Manage User Roles</h2>
+            Add/Remove Roles for User / @ViewBag.UserName.
         </div>
         <div class="card-body">
             @for (int i = 0; i < Model.Roles.Count; i++)
@@ -26,7 +26,7 @@
         <div class="card-footer">
             <input type="submit" value="Update" class="btn btn-primary"
                    style="width:auto" />
-            <a class="btn btn-primary" asp-page="./UserRoleModelsManager">Cancel</a>
+            <a class="btn btn-primary" asp-page="./UserRolesManager">Cancel</a>
         </div>
     </div>
 </form>
