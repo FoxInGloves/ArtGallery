@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ArtGallery.Models.Structs.Entity.Art>
+﻿@model IEnumerable<ArtGallery.Models.Structs.Dto.ArtDto>
 
 @{
     Layout = "_Layout";
@@ -22,7 +22,7 @@
                 <div class="element-block">
                     <div class="element-block__image">
                         <a asp-controller="Arts" asp-action="Picture">
-                            <img class="element-block__image" src="~/images/arts/devushka.jpg" alt="Картина"/>
+                            <img class="element-block__image" src="~/images/arts/9_val.jpg" alt="Картина"/>
                         </a>
                         <div class="element-block__like">
                             <button class="heart">
@@ -33,17 +33,15 @@
                     <div class="element-block__title">@art.Name</div>
                     <div class="element-block__param">
                         <div>
-                            <div class="element-block__artist">Художник:</div>
-                            <div class="element-block__artist">
-                                <a asp-controller="Arts" asp-action="Artist">@art.ArtistId</a>
+                            <div class="element-block__artist">Художник:
+                                <a asp-controller="Arts" asp-action="Artist" asp-route-idArtist="@art.ArtistId">@art.Artist?.Name</a>
                             </div>
                         </div>
                         <div class="element-block__size">
-                            Размер:
+                            Размер: @art.Size
                         </div>
                         <div>
-                            <div class="element-block__price">Цена:</div>
-                            <div class="element-block__price">@art.Price</div>
+                            <div class="element-block__price">Цена: @art.Price</div>
                         </div>
                     </div>
                 </div>

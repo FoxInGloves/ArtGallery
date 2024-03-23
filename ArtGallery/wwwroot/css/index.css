@@ -21,6 +21,11 @@
     text-align: center;
 }
 
+#title__background {
+    margin-top: 50px;
+    padding-top: 20px;
+}
+
 .index-ul {
     list-style: none;
     text-align: center;

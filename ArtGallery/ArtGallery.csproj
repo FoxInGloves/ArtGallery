@@ -19,11 +19,19 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0"/>
+        <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.4.3">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Views\Home\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Data\Implementations\" />
     </ItemGroup>
 
 </Project>

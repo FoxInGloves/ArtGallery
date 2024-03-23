@@ -66,6 +66,8 @@ namespace  ArtGallery.Areas.Identity.Pages.Account.Manage
 
         public static string UserRolesManager => "UserRolesManager";
 
+        public static string ArtsManager => "ArtsManager";
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -118,7 +120,9 @@ namespace  ArtGallery.Areas.Identity.Pages.Account.Manage
         public static string RoleManagerNavClass(ViewContext viewContext) => PageNavClass(viewContext, RoleManager);
 
         public static string UserRolesManagerNavClass(ViewContext viewContext) =>
-            PageNavClass(viewContext, UserRolesManager); 
+            PageNavClass(viewContext, UserRolesManager);
+
+        public static string ArtsManagerNavClass(ViewContext viewContext) => PageNavClass(viewContext, ArtsManager);
         
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

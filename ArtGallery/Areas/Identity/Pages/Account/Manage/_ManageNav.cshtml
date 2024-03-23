@@ -16,7 +16,8 @@
     <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
     @if (User.IsInRole("Admin"))
     {
-        <li class="nav-item"><a class="nav-link @ManageNavPages.RoleManagerNavClass(ViewContext)" asp-page="./RoleManager">Role manager</a></li>
+        <li class="nav-item"><a class="nav-link @ManageNavPages.RoleManagerNavClass(ViewContext)" asp-page="./RoleManager">RoleModel manager</a></li>
         <li class="nav-item"><a class="nav-link @ManageNavPages.UserRolesManagerNavClass(ViewContext)" asp-page="./UserRolesManager">User roles manager</a></li>
+        <li class="nav-item"><a class="nav-link @ManageNavPages.ArtsManagerNavClass(ViewContext)" asp-page="./ArtsManager">Arts manager</a></li>
     }
 </ul>

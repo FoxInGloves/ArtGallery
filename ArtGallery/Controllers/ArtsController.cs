@@ -1,37 +1,52 @@
 ﻿using System.Diagnostics;
 using ArtGallery.Models;
 using ArtGallery.Models.Structs.Dto;
-using ArtGallery.Models.Structs.Entity;
 using Microsoft.AspNetCore.Mvc;
+using Repository = ArtGallery.Data.Repository;
 
 namespace ArtGallery.Controllers;
 
 public class ArtsController : Controller
 {
     private readonly ILogger<ArtsController> _logger;
+    private readonly Repository _repository;
 
-    public ArtsController(ILogger<ArtsController> logger)
+    public ArtsController(ILogger<ArtsController> logger, Repository repository)
     {
         _logger = logger;
+        _repository = repository;
     }
     
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var viewModel = new MainPageViewModel()
+        var viewModel = new IndexViewModel()
         {
             Genres = GetGenres(5),
 
-            Arts = GetArts(4)
+            Arts = await GetArts(4)
         };
-        
-        var arts = GetArts(4);
         
         return View(viewModel);
     }
     
-    public IActionResult Artist(string idArtist)
+    public async Task<IActionResult> Artist(string idArtist)
     {
-        return View();
+        var artist = await _repository.GetArtistAsync(idArtist);
+
+        if (artist == null)
+        {
+            return NoContent();
+        }
+
+        var model = new ArtistDto
+        {
+            Name = artist.Name,
+            Country = artist.Country,
+            Description = artist.Description,
+            IconPath = artist.IconPath
+        };
+        
+        return View(artist);
     }
 
     public IActionResult Picture()
@@ -39,9 +54,9 @@ public class ArtsController : Controller
         return View();
     }
 
-    public IActionResult Catalog()
+    public async Task<IActionResult> Catalog()
     {
-        var arts = GetArts(35);
+        var arts = await GetArts(35);
         
         return View(arts);
     }
@@ -49,6 +64,34 @@ public class ArtsController : Controller
     public IActionResult Privacy()
     {
         return View();
+    }
+    
+    private async Task<IEnumerable<ArtDto>> GetArts(int count)
+    {
+        var myarts = new List<ArtDto>();
+
+        
+            var arts = await _repository.GetArtsAsync();
+
+            var artDtos = from art in arts
+                select new ArtDto()
+                {
+                    Id = art.Id,
+                    Name = art.Name,
+                    Description = art.Description,
+                    IconPath = art.IconPath,
+                    Size = art.Size,
+                    Price = art.Price,
+                    ArtistId = art.ArtistId,
+                    Artist = art.Artist
+                };
+            
+            for (var i = 0; i < count; i++)
+            { 
+                myarts.AddRange(artDtos); 
+            }
+
+        return myarts;
     }
 
     private IEnumerable<GenreDto> GetGenres(int count)
@@ -60,28 +103,11 @@ public class ArtsController : Controller
             genres.Add(new GenreDto
             {
                 Name = "Морской пейзаж",
-                IconPath = "~/images/genres/sunset-ocean.png"
+                IconPath = "/images/genres/seascape.png"
             });
         }
 
         return genres;
-    }
-
-    private IEnumerable<Art> GetArts(int count)
-    {
-        var arts = new List<Art>();
-
-        for (var i = 0; i < count; i++)
-        {
-            arts.Add(new Art
-            {
-                Name = "9 вал", 
-                Price = "1000$", 
-                Author = "Иван Айвазовский"
-            });
-        }
-
-        return arts;
     }
     
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

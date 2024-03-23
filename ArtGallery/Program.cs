@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using ArtGallery.Data;
 using ArtGallery.Models.Describers;
 using ArtGallery.Models.Managers;
-using ArtGallery.Models.Structs;
 using ArtGallery.Models.Structs.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +34,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<Repository, Repository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -57,18 +58,9 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-/*app.MapControllerRoute(
-    name: "IdentityArea",
-    pattern: "{area:exists}/{controller=Account}/{action=Index}/{id?}");*/
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Arts}/{action=Index}/{id?}");
-
-/*app.MapAreaControllerRoute(
-    name: "IdentityArea",
-    areaName: "Identity",
-    pattern: "Identity/{controller=Account}/{action=Index}/{id?}");*/
 
 app.MapRazorPages();
 

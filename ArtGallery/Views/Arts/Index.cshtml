@@ -1,4 +1,4 @@
-﻿@model MainPageViewModel
+﻿@model IndexViewModel
 
 @{
     Layout = "_Layout";
@@ -31,7 +31,7 @@
                 <div class="index__block">
                     <div class="index__img-container">
                         <a>
-                            <img class="index__genre__img" src="~/images/genres/seascape.png" alt="Картина"/>
+                            <img class="index__genre__img" src="@genre.IconPath" alt="Жанр"/>
                             <h5 class="index-genre__name">@genre.Name</h5>
                         </a>
                     </div>
@@ -40,10 +40,10 @@
         }
     </ul>
     </div>
-    <div class="index__title">
-        <strong>Новинки (пока без анимации)</strong>
-    </div>
     <div class="element-container">
+        <div class="index__title" id="title__background">
+            <strong><h2>Новинки</h2></strong>
+        </div>
         <ul class="element-ul">
             @foreach (var art in Model.Arts)
             {
@@ -51,7 +51,7 @@
                     <div class="element-block">
                         <div class="element-block__image">
                             <a asp-controller="Arts" asp-action="Picture">
-                                <img class="element-block__image" src="~/images/arts/devushka.jpg" alt="Картина"/>
+                                <img class="element-block__image" src="@art.IconPath" alt="Картина"/>
                             </a>
                             <div class="element-block__like">
                                 <button class="heart">
@@ -64,15 +64,13 @@
                             <div>
                                 <div class="element-block__artist">Художник:</div>
                                 <div class="element-block__artist">
-                                    <a asp-controller="Arts" asp-action="Artist">@art.ArtistId</a>
+                                    <a asp-controller="Arts" asp-action="Artist" 
+                                       asp-route-idArtist="@art.Artist?.Id">@art.Artist?.Name</a>
                                 </div>
                             </div>
-                            <div class="element-block__size">
-                                Размер:
-                            </div>
+                            <div class="element-block__size">Размер: @art.Size</div>
                             <div>
-                                <div class="element-block__price">Цена:</div>
-                                <div class="element-block__price">@art.Price</div>
+                                <div class="element-block__price">Цена: @art.Price</div>
                             </div>
                         </div>
                     </div>
