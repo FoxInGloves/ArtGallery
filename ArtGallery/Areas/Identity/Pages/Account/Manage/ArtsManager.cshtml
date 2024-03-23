@@ -1,0 +1,115 @@
+﻿@page
+@model ArtGallery.Areas.Identity.Pages.Account.Manage.ArtsManager
+
+@{
+    
+}
+
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <title>Редактирование контента</title>
+    <link rel="stylesheet" href="~/css/arts-manager.css"/>
+</head>
+<body>
+<div class="main-container">
+    <form method="post">
+    <div class="select-container">
+        <input type="search" list="arts" class="form-control search" id="select" name="artId"/>
+        <datalist id="arts">
+            @foreach (var art in Model.Arts)
+            {
+                <option value="@art.Id" label="@art.Name, @art.Artist.Name"></option>
+            }
+        </datalist>
+        <button type="submit" class="btn btn-primary select-inline" asp-page-handler="FindArt">Изменить</button>
+    </div>
+    </form>
+    <div class="container-preview">
+        <table>
+            <td>
+                <div class="container__image">
+                    <h5 class="form-label">Картина:</h5>
+                    @if (Model.SelectedArt.IconPath == null)
+                    {
+                        <img class="art-preview" id="picture" src="" alt=""/>
+                    }
+                    else
+                    {
+                        <img class="art-preview" src="@Model.SelectedArt.IconPath" alt="загруженная картина"/>
+                    }
+                    <div class="margin20">
+                        <input type="file"
+                               accept="image/jpeg, image/png"
+                               class="form-control"
+                               onchange="document.getElementById('picture').src = window.URL.createObjectURL(this.files[0])"/>
+                    </div>
+                    <div class="margin20 inline">
+                        <h6>Название:</h6>
+                        <input type="text" asp-for="SelectedArt.Name" class="form-control input"/>
+                        <h6 class="margin10">Размер:</h6>
+                        <input type="text" asp-for="SelectedArt.Size" class="form-control"/>
+                        <h6 class="margin10">Жанр:</h6>
+                        <input list="genres" class="form-control" asp-for="SelectedArt.GenreId"/>
+                        <datalist id="genres">
+                            @foreach (var genre in Model.Genres)
+                            {
+                                <option value="@genre.Id" label="@genre.Name"></option>
+                            }
+                        </datalist>
+                        <h6 class="margin10">Художник:</h6>
+                        <input list="artists" class="form-control" asp-for="SelectedArt.ArtistId"/>
+                        <datalist id="artists">
+                            @foreach (var artist in Model.Artists)
+                            {
+                                <option value="@artist.Id" label="@artist.Name"></option>
+                            }
+                        </datalist>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="container__text">
+                    <h6>Описание картины:</h6>
+                    <textarea class="form-control text"  rows="7" placeholder="Описание" asp-for="SelectedArt.Description"></textarea>
+                </div>
+            </td>
+        </table>
+    </div>
+    <hr class="margin20"/>
+    <div class="container-preview">
+        <table>
+            <td>
+                <div class="container__image">
+                    <h5 class="form-label">Художник:</h5>
+                    @if (Model.SelectedArtist.IconPath == null)
+                    {
+                        <img class="art-preview" id="picture" src="" alt=""/>
+                    }
+                    else
+                    {
+                        <img class="art-preview" src="@Model.SelectedArtist.IconPath" alt="загруженная картина"/>
+                    }
+                    <div class="margin20">
+                        <input type="file"
+                               accept="image/jpeg, image/png"
+                               class="form-control"
+                               onchange="document.getElementById('picture').src = window.URL.createObjectURL(this.files[0])"/>
+                    </div>
+                    <div class="margin20">
+                        <input type="text" asp-for="SelectedArtist.Name" class="form-control"/>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="container__text">
+                    <h6>Описание художника:</h6>
+                    <textarea class="form-control" id="text" rows="7" placeholder="Описание"></textarea>
+                </div>
+            </td>
+        </table>
+    </div>
+</div>
+</body>
+</html>
