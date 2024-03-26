@@ -21,5 +21,5 @@ public class Art
     
     public string IconPath { get; set; }
     
-    public Artist Artist { get; set; }
+    public virtual Artist Artist { get; set; }
 }
