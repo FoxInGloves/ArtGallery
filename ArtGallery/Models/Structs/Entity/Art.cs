@@ -1,5 +1,4 @@
 ﻿#nullable disable
-
 namespace ArtGallery.Models.Structs.Entity;
 
 public class Art
@@ -22,5 +21,5 @@ public class Art
     
     public string IconPath { get; set; }
     
-    public virtual Artist Artist { get; set; }
+    public Artist Artist { get; set; }
 }

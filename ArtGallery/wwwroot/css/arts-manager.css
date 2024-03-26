@@ -26,7 +26,12 @@
     }
 }
 
+td {
+    position: relative;
+}
+
 .search {
+    margin-top: 10px;
     width: 500px;
     display: inline-block;
 }
@@ -52,6 +57,20 @@
     width: 650px;
 }
 
+.control-container {
+    position: absolute;
+    bottom: 0;
+    right: 25px;
+    margin-top: auto;
+    display: flex;
+    float: right;
+    justify-content: flex-end;
+}
+
+.control-button {
+    margin-top: auto;
+}
+
 .margin20 {
     margin-top: 20px;
 }
@@ -60,7 +79,7 @@
     margin-top: 10px;
 }
 
-.select-inline {
+.select-button-inline {
     display: inline-block;
     margin: auto auto 5px 10px;
 }

@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ArtGallery.Data;
+using ArtGallery.Models.Structs.Dto;
 using ArtGallery.Models.Structs.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ArtGallery.Areas.Identity.Pages.Account.Manage;
 
@@ -32,41 +34,43 @@ public class ArtsManager : PageModel
     
     public class SelectedArtModel
     {
-        //public string Id { get; set; }
+        public string Id { get; set; }
+        
+        public string? ArtistId { get; set; }
+        
+        public string? DateOfCreation { get; set; }
+        
+        public string? Description { get; set; }
+         
+        public string? GenreId { get; set; }
+        
+        public string? IconPath { get; set; }
+        
         [Required]
         public string? Name { get; set; }
         
         public string? Price { get; set; }
         
         public string? Size { get; set; }
-        
-        public string? DateOfCreation { get; set; }
-        
-        public string? Description { get; set; }
-        
-        [Required]
-        public string? IconPath { get; set; }
-        
-        public string? GenreId { get; set; }
-        
-        public string? ArtistId { get; set; }
     }
     
     public class SelectedArtistModel
     {
-        public string? Name { get; set; }
+        public string Id { get; set; }
+        
+        public string Country { get; set; }
         
         public string? Description { get; set; }
         
         public string? IconPath { get; set; }
+        
+        public string? Name { get; set; }
     }
 
-    public async Task LoadAsync(Art? selectedArt)
+    public async Task LoadAsync(Art? selectedArt, Artist? selectedArtist)
     {
         Arts = await _repository.GetArtsAsync();
-
         Artists = await _repository.GetArtistsAsync();
-
         Genres = await _repository.GetGenresAsync();
 
         if (selectedArt == null)
@@ -77,38 +81,224 @@ public class ArtsManager : PageModel
         {
             SelectedArt = new SelectedArtModel()
             {
+                Id = selectedArt.Id,
                 ArtistId = selectedArt.ArtistId,
                 DateOfCreation = selectedArt.DateOfCreation,
                 Description = selectedArt.Description,
                 GenreId = selectedArt.GenreId,
                 IconPath = selectedArt.IconPath,
-                //Id = selectedArt.Id,
                 Name = selectedArt.Name,
                 Price = selectedArt.Price,
                 Size = selectedArt.Size
             };
         }
-        
-        SelectedArtist = new SelectedArtistModel();
+
+        if (selectedArtist == null)
+        {
+            SelectedArtist = new SelectedArtistModel();
+        }
+        else
+        {
+            SelectedArtist = new SelectedArtistModel()
+            {
+                Country = selectedArtist.Country,
+                Description = selectedArtist.Description,
+                IconPath = selectedArtist.IconPath,
+                Id = selectedArtist.Id,
+                Name = selectedArtist.Name
+            };
+        }
     }
     
-    public async Task<IActionResult> OnGetAsync(string artId)
+    public async Task<IActionResult> OnGetAsync(string artId, string artistId)
     {
         var selectedArt = await _repository.GetArtAsync(artId);
-        await LoadAsync(selectedArt);
+        var selectedArtist = await _repository.GetArtistAsync(artistId);
+        await LoadAsync(selectedArt, selectedArtist);
         return Page();
     }
-
-    public async Task OnPostUpdateArtAsync(string artId)
+    
+    public Task<IActionResult> OnPostFindContentAsync(string artId, string artistId)
     {
-        var art = _repository.GetArtAsync(artId);
+        return Task.FromResult<IActionResult>(RedirectToAction(null, new {artId, artistId}));
+    }
 
+    public async Task<IActionResult> OnPostUpdateArtAsync(IFormFile? picture)
+    {
         //TODO add ModelState.IsValid
+        var iconPath = SelectedArt.IconPath;
+        var tempIconPath = iconPath;
+
+        if (picture?.Name != null)
+        {
+            iconPath = await UploadImageAsync(picture, MethodSelector.Art);
+            if (!string.Equals(tempIconPath, iconPath) && iconPath != null)
+            {
+                RemoveImage(tempIconPath);
+            }
+        }
         
+        var artDto = new ArtDto
+        {
+            Id = SelectedArt.Id,
+            ArtistId = SelectedArt.ArtistId,
+            DateOfCreation = SelectedArt.DateOfCreation,
+            Description = SelectedArt.Description,
+            GenreId = SelectedArt.GenreId,
+            IconPath = iconPath,
+            Name = SelectedArt.Name,
+            Price = SelectedArt.Price,
+            Size = SelectedArt.Size,
+        };
+        await _repository.UpdateArtAsync(SelectedArt.Id, artDto);
+        return RedirectToPage();
     }
 
-    public Task<IActionResult> OnPostFindArtAsync(string artId)
+    public async Task<IActionResult> OnPostCreateArtAsync(IFormFile? picture)
     {
-        return Task.FromResult<IActionResult>(RedirectToAction(null, new {artId}));
+        string? iconPath;
+        if (SelectedArt.IconPath.IsNullOrEmpty())
+        {
+            iconPath = await UploadImageAsync(picture, MethodSelector.Art);
+        }
+        else
+        {
+            iconPath = SelectedArt.IconPath;
+        }
+        var art = new ArtDto
+        {
+            ArtistId = SelectedArt.ArtistId,
+            DateOfCreation = SelectedArt.DateOfCreation,
+            Description = SelectedArt.Description,
+            GenreId = SelectedArt.GenreId,
+            IconPath = iconPath,
+            Name = SelectedArt.Name,
+            Price = SelectedArt.Price,
+            Size = SelectedArt.Size,
+        };
+        await _repository.CreateArtAsync(art);
+        return RedirectToPage();
     }
+
+    public async Task<IActionResult> OnPostDeleteArtAsync()
+    {
+        await _repository.DeleteArtAsync(SelectedArt.Id);
+        RemoveImage(SelectedArt.IconPath);
+        return RedirectToPage();
+    }
+
+    public async Task<IActionResult> OnPostUpdateArtistAsync(IFormFile? picture)
+    {
+        //TODO add ModelState.IsValid
+        var iconPath = SelectedArtist.IconPath;
+        var tempIconPath = iconPath;
+        iconPath = await UploadImageAsync(picture, MethodSelector.Artist);
+
+        if (!string.Equals(tempIconPath, iconPath))
+        {
+            RemoveImage(tempIconPath);
+        }
+
+        var artistDto = new ArtistDto
+        {
+            Id = SelectedArtist.Id,
+            Country = SelectedArtist.Country,
+            Description = SelectedArtist.Description,
+            IconPath = iconPath,
+            Name = SelectedArtist.Name,
+        };
+        await _repository.UpdateArtistAsync(SelectedArt.Id, artistDto);
+        return RedirectToPage();
+    }
+    
+    public async Task<IActionResult> OnPostCreateArtistAsync(IFormFile? picture)
+    {
+        string? iconPath;
+        if (SelectedArtist.IconPath.IsNullOrEmpty())
+        {
+            iconPath = await UploadImageAsync(picture, MethodSelector.Artist);
+        }
+        else
+        {
+            iconPath = SelectedArtist.IconPath;
+        }
+        var artist = new ArtistDto
+        {
+            Id = SelectedArtist.Id,
+            Country = SelectedArtist.Country,
+            Description = SelectedArtist.Description,
+            IconPath = iconPath,
+            Name = SelectedArtist.Name,
+        };
+        await _repository.CreateArtistAsync(artist);
+        return RedirectToPage();
+    }
+    
+    public async Task<IActionResult> OnPostDeleteArtistAsync()
+    {
+        await _repository.DeleteArtistAsync(SelectedArtist.Id);
+        RemoveImage(SelectedArtist.IconPath);
+        return RedirectToPage();
+    }
+    
+    private static async Task<string?> UploadImageAsync(IFormFile? image, MethodSelector selector)
+    {
+        string? imagePath;
+        if (image != null)
+        {
+            var fileName = Path.GetFileName(image.FileName);
+            var uploadPath = $"{Directory.GetCurrentDirectory()}/wwwroot/images/{Methods[selector]}/{fileName}";
+            if (System.IO.File.Exists(uploadPath))
+            {
+                uploadPath = GenerateUniqueFileName(fileName, selector);
+            }
+            await using var fileStream = new FileStream(uploadPath, FileMode.Create);
+            await image.CopyToAsync(fileStream);
+            imagePath = $"/images/{Methods[selector]}/{fileName}";
+        }
+        else
+        {
+            imagePath = null;
+        }
+        return imagePath;
+    }
+    
+    private static string GenerateUniqueFileName(string fileName, MethodSelector selector)
+    {
+        var extension = Path.GetExtension(fileName);
+        var fileNameOnly = Path.GetFileNameWithoutExtension(fileName);
+
+        var counter = 1;
+        var uniqueFileName = fileName;
+        
+        while (System.IO.File.Exists($"{Directory.GetCurrentDirectory()}/wwwroot/images/{Methods[selector]}/{uniqueFileName}"))
+        {
+            var tempFileName = $"{Directory.GetCurrentDirectory()}/wwwroot/images/{Methods[selector]}/{fileNameOnly}({counter}){extension}";
+            uniqueFileName = tempFileName;
+            counter++;
+        }
+        return uniqueFileName;
+    }
+
+    private static void RemoveImage(string? iconPath)
+    {
+        if (iconPath == null) return;
+        var uploadPath = $"{Directory.GetCurrentDirectory()}/wwwroot/{iconPath}";
+        if (System.IO.File.Exists(uploadPath))
+        {
+            System.IO.File.Delete(uploadPath);
+        }
+    }
+    
+    private enum MethodSelector
+    {
+        Art,
+        Artist
+    }
+
+    private static readonly Dictionary<MethodSelector, string> Methods = new Dictionary<MethodSelector, string>()
+    {
+        { MethodSelector.Art, "arts" },
+        { MethodSelector.Artist, "artists" }
+    };
 }

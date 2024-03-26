@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>aspnet-CarShowroom-57CA75BF-4C05-4BD7-9D14-22595A9133AD</UserSecretsId>
@@ -13,25 +13,21 @@
 
     <ItemGroup>
         <PackageReference Include="jQuery" Version="3.7.1" />
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0"/>
-        <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.4.3">
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.0-preview.2.24128.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0-preview.2.24128.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.0-preview.2.24128.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0-preview.2.24128.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.0-preview.2.24128.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0-preview.2.24128.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0-preview.2.24128.4">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0-preview.2.24158.2" />
     </ItemGroup>
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Views\Home\Index.cshtml" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Data\Implementations\" />
     </ItemGroup>
 
 </Project>
