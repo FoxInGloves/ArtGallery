@@ -8,13 +8,15 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace ArtGallery.Areas.Identity.Pages.Account.Manage;
 
-public class ArtsManager : PageModel
+public class ArtsManagerModel : PageModel
 {
     private readonly Repository _repository;
+    private readonly ILogger<ArtsManagerModel> _logger;
     
-    public ArtsManager(Repository repository)
+    public ArtsManagerModel(Repository repository, ILogger<ArtsManagerModel> logger)
     {
         _repository = repository;
+        _logger = logger;
     }
     
     [TempData]
@@ -138,7 +140,7 @@ public class ArtsManager : PageModel
             }
         }
         
-        var artDto = new ArtDto
+        var art = new ArtDto
         {
             Id = SelectedArt.Id,
             ArtistId = SelectedArt.ArtistId,
@@ -150,7 +152,8 @@ public class ArtsManager : PageModel
             Price = SelectedArt.Price,
             Size = SelectedArt.Size,
         };
-        await _repository.UpdateArtAsync(SelectedArt.Id, artDto);
+        await _repository.UpdateArtAsync(SelectedArt.Id, art);
+        _logger.LogInformation("Art '{Id}' has been updated", art.Id);
         return RedirectToPage();
     }
 
@@ -167,6 +170,7 @@ public class ArtsManager : PageModel
         }
         var art = new ArtDto
         {
+            Id = Guid.NewGuid().ToString(),
             ArtistId = SelectedArt.ArtistId,
             DateOfCreation = SelectedArt.DateOfCreation,
             Description = SelectedArt.Description,
@@ -177,6 +181,7 @@ public class ArtsManager : PageModel
             Size = SelectedArt.Size,
         };
         await _repository.CreateArtAsync(art);
+        _logger.LogInformation("Art '{Id}' has been created", art.Id);
         return RedirectToPage();
     }
 
@@ -184,6 +189,7 @@ public class ArtsManager : PageModel
     {
         await _repository.DeleteArtAsync(SelectedArt.Id);
         RemoveImage(SelectedArt.IconPath);
+        _logger.LogInformation("Art '{Id}' has been deleted", SelectedArt.Id);
         return RedirectToPage();
     }
 
@@ -199,7 +205,7 @@ public class ArtsManager : PageModel
             RemoveImage(tempIconPath);
         }
 
-        var artistDto = new ArtistDto
+        var artist = new ArtistDto
         {
             Id = SelectedArtist.Id,
             Country = SelectedArtist.Country,
@@ -207,7 +213,8 @@ public class ArtsManager : PageModel
             IconPath = iconPath,
             Name = SelectedArtist.Name,
         };
-        await _repository.UpdateArtistAsync(SelectedArt.Id, artistDto);
+        await _repository.UpdateArtistAsync(SelectedArt.Id, artist);
+        _logger.LogInformation("Artist '{Id}' has been updated", artist.Id);
         return RedirectToPage();
     }
     
@@ -224,13 +231,14 @@ public class ArtsManager : PageModel
         }
         var artist = new ArtistDto
         {
-            Id = SelectedArtist.Id,
+            Id = Guid.NewGuid().ToString(),
             Country = SelectedArtist.Country,
             Description = SelectedArtist.Description,
             IconPath = iconPath,
             Name = SelectedArtist.Name,
         };
         await _repository.CreateArtistAsync(artist);
+        _logger.LogInformation("Artist '{Id}' has been created", artist.Id);
         return RedirectToPage();
     }
     
@@ -238,6 +246,7 @@ public class ArtsManager : PageModel
     {
         await _repository.DeleteArtistAsync(SelectedArtist.Id);
         RemoveImage(SelectedArtist.IconPath);
+        _logger.LogInformation("Artist '{Id}' has been deleted", SelectedArtist.Id);
         return RedirectToPage();
     }
     
