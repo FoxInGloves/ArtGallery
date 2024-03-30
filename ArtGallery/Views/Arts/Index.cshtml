@@ -50,8 +50,8 @@
                 <li class="horizontal-li">
                     <div class="element-block">
                         <div class="element-block__image">
-                            <a asp-controller="Arts" asp-action="Picture">
-                                <img class="element-block__image" src="@art.IconPath" alt="Картина"/>
+                            <a asp-controller="Arts" asp-action="Picture" asp-route-art="@art">
+                                <img class="element-block__image" src="@art.IconPath" alt="@art.Name"/>
                             </a>
                             <div class="element-block__like">
                                 <button class="heart">

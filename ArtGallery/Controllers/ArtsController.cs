@@ -49,9 +49,9 @@ public class ArtsController : Controller
         return View(artist);
     }
 
-    public IActionResult Picture()
+    public IActionResult Picture(ArtDto art)
     {
-        return View();
+        return View(art);
     }
 
     public async Task<IActionResult> Catalog()
