@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using ArtGallery.Models;
 using ArtGallery.Models.Structs.Dto;
+using ArtGallery.Models.Structs.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Repository = ArtGallery.Data.Repository;
 
@@ -21,7 +22,8 @@ public class ArtsController : Controller
     {
         var viewModel = new IndexViewModel()
         {
-            Genres = GetGenres(5),
+            
+            Genres = await GetGenres(5),
 
             Arts = await GetArts(4)
         };
@@ -38,24 +40,23 @@ public class ArtsController : Controller
             return NoContent();
         }
 
-        var model = new ArtistDto
-        {
-            Name = artist.Name,
-            Country = artist.Country,
-            Description = artist.Description,
-            IconPath = artist.IconPath
-        };
+        var artistToView = ConvertArtistToDto(artist);
         
-        return View(artist);
+        return View(artistToView);
     }
 
-    public IActionResult Picture(ArtDto art)
+    public async Task<IActionResult> Picture(string artId)
     {
-        return View(art);
+        var art = await _repository.GetArtAsync(artId);
+
+        var artToView = ConvertArtToDto(art);
+        
+        return View(artToView);
     }
 
     public async Task<IActionResult> Catalog()
     {
+        //TODO подключить репозиторий
         var arts = await GetArts(35);
         
         return View(arts);
@@ -69,45 +70,92 @@ public class ArtsController : Controller
     private async Task<IEnumerable<ArtDto>> GetArts(int count)
     {
         var myarts = new List<ArtDto>();
-
         
-            var arts = await _repository.GetArtsAsync();
+        var arts = await _repository.GetArtsAsync();
 
-            var artDtos = from art in arts
-                select new ArtDto()
-                {
-                    Id = art.Id,
-                    Name = art.Name,
-                    Description = art.Description,
-                    IconPath = art.IconPath,
-                    Size = art.Size,
-                    Price = art.Price,
-                    ArtistId = art.ArtistId,
-                    Artist = art.Artist
-                };
+        var artsToView = ConvertArtToDto(arts);
             
-            for (var i = 0; i < count; i++)
-            { 
-                myarts.AddRange(artDtos); 
-            }
+        for (var i = 0; i < count; i++)
+        { 
+            myarts.AddRange(artsToView); 
+        }
 
         return myarts;
     }
 
-    private IEnumerable<GenreDto> GetGenres(int count)
+    private async Task<IEnumerable<GenreDto>> GetGenres(int count)
     {
-        var genres = new List<GenreDto>();
+        var myGenres = new List<GenreDto>();
+
+        var genres = await _repository.GetGenresAsync();
+
+        var genresToView = ConvertGenreToDto(genres);
 
         for (var i = 0; i < count; i++)
         {
-            genres.Add(new GenreDto
-            {
-                Name = "Морской пейзаж",
-                IconPath = "/images/genres/seascape.png"
-            });
+            myGenres.AddRange(genresToView);
         }
 
-        return genres;
+        return myGenres;
+    }
+
+    private IEnumerable<ArtDto> ConvertArtToDto(IEnumerable<Art> originalArts)
+    {
+        var mappingArts = originalArts.Select(art => new ArtDto()
+        {
+            Id = art.Id,
+            Name = art.Name,
+            Description = art.Description,
+            IconPath = art.IconPath,
+            Size = art.Size,
+            Price = art.Price,
+            ArtistId = art.ArtistId,
+            Artist = art.Artist
+        });
+
+        return mappingArts;
+    }
+    
+    private ArtDto ConvertArtToDto(Art originalArt)
+    {
+        var mappingArts =  new ArtDto()
+        {
+            Id = originalArt.Id,
+            Name = originalArt.Name,
+            Description = originalArt.Description,
+            IconPath = originalArt.IconPath,
+            Size = originalArt.Size,
+            Price = originalArt.Price,
+            ArtistId = originalArt.ArtistId,
+            Artist = originalArt.Artist
+        };
+
+        return mappingArts;
+    }
+
+    private ArtistDto ConvertArtistToDto(Artist originalArtis)
+    {
+        var mappingArtist = new ArtistDto
+        {
+            Name = originalArtis.Name,
+            Country = originalArtis.Country,
+            Description = originalArtis.Description,
+            IconPath = originalArtis.IconPath
+        };
+
+        return mappingArtist;
+    }
+
+    private IEnumerable<GenreDto> ConvertGenreToDto(IEnumerable<Genre> originalGenres)
+    {
+        var mappingGenres = originalGenres.Select(genre => new GenreDto()
+        {
+            Id = genre.Id,
+            IconPath = genre.IconPath,
+            Name = genre.Name
+        });
+
+        return mappingGenres;
     }
     
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

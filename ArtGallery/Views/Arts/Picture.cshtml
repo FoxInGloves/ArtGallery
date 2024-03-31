@@ -1,15 +1,24 @@
-﻿@page
+﻿@model ArtGallery.Models.Structs.Dto.ArtDto 
 @{
     Layout = "_Layout";
 }
 
 <html lang="ru">
 <head>
-    <link rel="stylesheet" href="css/Picture.css"/>
+    <link rel="stylesheet" href="~/css/Picture.css"/>
 </head>
 <body>
-<div>
-    <img class="picture-image" src="~/images/arts/9_val.jpg"/>
+<div class="picture-page__container">
+    <div class="picture-page__head">
+        <div class="picture-image">
+            <img src="@Model.IconPath" alt="@Model.Name"/>
+        </div>
+        <div class="picture-page__main">
+            <div class="picture-page__title"><h5>@Model.Name</h5></div>
+            <div class="picture-page__parameter">@Model.DateOfCreation</div>
+            <div>@Model.Description</div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿@page
+﻿
 @using Microsoft.IdentityModel.Tokens
 @model ArtGallery.Areas.Identity.Pages.Account.Manage.ArtsManagerModel
 
@@ -22,7 +22,7 @@
             <datalist id="arts">
                 @foreach (var art in Model.Arts)
                 {
-                    <option value="@art.Id" label="@art.Name, @art.Artist?.Name"></option>
+                    <option value="@art.Id" label="@art.Name, @art.DateOfCreation, @art.Id"></option>
                 }
             </datalist>
             <button type="submit" class="btn btn-primary select-button-inline" asp-page-handler="FindContent">Изменить</button>

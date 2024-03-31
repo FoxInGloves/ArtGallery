@@ -5,7 +5,7 @@ namespace ArtGallery.Models;
 
 public class IndexViewModel
 {
-    public IEnumerable<GenreDto> Genres { get; set; }
-    
     public IEnumerable<ArtDto> Arts { get; set; }
+    
+    public IEnumerable<GenreDto> Genres { get; set; }
 }

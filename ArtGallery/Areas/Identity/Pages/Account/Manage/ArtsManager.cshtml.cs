@@ -22,7 +22,7 @@ public class ArtsManagerModel : PageModel
     [TempData]
     public string StatusMessage { get; set; }
     
-    public IEnumerable<Art> Arts { get; set; }
+    public IEnumerable<ArtDto> Arts { get; set; }
     
     public IEnumerable<Artist> Artists { get; set; }
     
@@ -60,7 +60,7 @@ public class ArtsManagerModel : PageModel
     {
         public string Id { get; set; }
         
-        public string Country { get; set; }
+        public string? Country { get; set; }
         
         public string? Description { get; set; }
         
@@ -71,7 +71,19 @@ public class ArtsManagerModel : PageModel
 
     public async Task LoadAsync(Art? selectedArt, Artist? selectedArtist)
     {
-        Arts = await _repository.GetArtsAsync();
+        var arts = await _repository.GetArtsAsync();
+        
+        Arts = arts.Select(art => new ArtDto()
+        {
+            Id = art.Id,
+            Name = art.Name,
+            Description = art.Description,
+            IconPath = art.IconPath,
+            Size = art.Size,
+            Price = art.Price,
+            ArtistId = art.ArtistId,
+        });
+        
         Artists = await _repository.GetArtistsAsync();
         Genres = await _repository.GetGenresAsync();
 
@@ -81,7 +93,7 @@ public class ArtsManagerModel : PageModel
         }
         else
         {
-            SelectedArt = new SelectedArtModel()
+            SelectedArt = new SelectedArtModel
             {
                 Id = selectedArt.Id,
                 ArtistId = selectedArt.ArtistId,
