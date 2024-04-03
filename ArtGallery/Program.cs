@@ -1,8 +1,11 @@
+using System.Collections.Immutable;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ArtGallery.Data;
+using ArtGallery.Data.Implementations;
 using ArtGallery.Models.Describers;
 using ArtGallery.Models.Managers;
+using ArtGallery.Models.Services;
 using ArtGallery.Models.Structs.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,7 +37,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<Repository, Repository>();
+builder.Services.AddScoped<UnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ConverterToDto, ConverterToDto>();
+builder.Services.AddScoped<ImageManipulation, ImageManipulation>();
 
 var app = builder.Build();
 
