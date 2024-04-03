@@ -1,3 +1,33 @@
-﻿.picture-image {
-    max-width: 500px;
+﻿.picture-page__container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.picture-page__head {
+    display: inline-block;
+}
+
+.picture-image {
+    display: inline-block;
+    float: left;
+    margin-right: 30px;
+
+    img {
+        max-width: 600px;
+    }
+}
+
+.picture-page__main {
+    display: inline-block;
+    max-width: 550px;
+}
+
+.picture-page__title {
+    margin-bottom: 10px;
+}
+
+.picture-page__parameter {
+    margin-bottom: 15px;
 }
