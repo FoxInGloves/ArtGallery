@@ -54,6 +54,7 @@ td {
 
 .container__text {
     margin-left: 50px;
+    margin-bottom: 65px;
     width: 650px;
 }
 
@@ -61,7 +62,7 @@ td {
     position: absolute;
     bottom: 0;
     right: 25px;
-    margin-top: auto;
+    margin-top: 10px;
     display: flex;
     float: right;
     justify-content: flex-end;
