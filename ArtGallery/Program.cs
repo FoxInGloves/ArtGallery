@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ArtGallery.Data;
+using ArtGallery.Data.Abstractions;
 using ArtGallery.Data.Implementations;
 using ArtGallery.Models.Describers;
 using ArtGallery.Models.Managers;
@@ -14,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseLazyLoadingProxies().UseSqlServer(connectionString));
+    options.UseLazyLoadingProxies().UseNpgsql(connectionString));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
@@ -37,8 +38,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<UnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<ConverterToDto, ConverterToDto>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ImageManipulation, ImageManipulation>();
 
 var app = builder.Build();

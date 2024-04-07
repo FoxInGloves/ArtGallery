@@ -1,10 +1,10 @@
 ﻿using System.Linq.Expressions;
+using ArtGallery.Data.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 
-namespace ArtGallery.Data.Abstractions;
+namespace ArtGallery.Data.Implementations;
 
-public class GenericRepository<TEntity> where TEntity : class
+public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
 {
     private readonly ApplicationDbContext _context;
     private readonly DbSet<TEntity> _dbSet;

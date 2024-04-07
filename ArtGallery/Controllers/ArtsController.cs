@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using ArtGallery.Data.Abstractions;
 using ArtGallery.Data.Implementations;
 using ArtGallery.Models;
 using ArtGallery.Models.Services;
@@ -11,14 +12,14 @@ namespace ArtGallery.Controllers;
 public class ArtsController : Controller
 {
     private readonly ILogger<ArtsController> _logger;
-    private readonly UnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ConverterToDto _converterToDto;
 
-    public ArtsController(ILogger<ArtsController> logger, UnitOfWork unitOfWork, ConverterToDto converter)
+    public ArtsController(ILogger<ArtsController> logger, IUnitOfWork unitOfWork)
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
-        _converterToDto = converter;
+        _converterToDto = new ConverterToDto();
     }
     
     public async Task<IActionResult> Index()
@@ -28,6 +29,7 @@ public class ArtsController : Controller
         
         var viewModel = new IndexViewModel
         {
+            //TODO не забыть убрать методы, не относящиеся к бд
             Genres = await GetGenres(genres, 5),
             Arts = await GetArts(arts, 4)
         };

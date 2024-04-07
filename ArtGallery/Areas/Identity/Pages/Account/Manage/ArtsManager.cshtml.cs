@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ArtGallery.Data;
+using ArtGallery.Data.Abstractions;
 using ArtGallery.Data.Implementations;
 using ArtGallery.Models.Services;
 using ArtGallery.Models.Structs.Dto;
@@ -13,20 +14,19 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage;
 public class ArtsManagerModel : PageModel
 {
     private readonly ILogger<ArtsManagerModel> _logger;
-    private readonly UnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ConverterToDto _converterToDto;
     private readonly ImageManipulation _imageManipulation;
     
     public ArtsManagerModel(
         ILogger<ArtsManagerModel> logger, 
-        UnitOfWork unitOfWork, 
-        ConverterToDto converter,
+        IUnitOfWork unitOfWork, 
         ImageManipulation imageManipulation)
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
-        _converterToDto = converter;
         _imageManipulation = imageManipulation;
+        _converterToDto = new ConverterToDto();
     }
     
     [TempData]
