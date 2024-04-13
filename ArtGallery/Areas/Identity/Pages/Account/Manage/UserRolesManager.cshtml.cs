@@ -42,7 +42,7 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
 
             foreach (var user in users)
             {
-                var userRole = new UserRolesModel()
+                var userRole = new UserRolesModel
                 {
                     UserId = user.Id,
                     UserName = user.UserName,
