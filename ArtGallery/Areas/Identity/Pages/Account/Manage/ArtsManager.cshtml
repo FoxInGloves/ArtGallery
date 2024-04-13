@@ -8,16 +8,16 @@
 
 <!DOCTYPE html>
 
-<html lang="ru">
+<html lang="en">
 <head>
-    <title>Редактирование контента</title>
+    <title>Change content</title>
     <link rel="stylesheet" href="~/css/arts-manager.css"/>
 </head>
 <body>
 <div class="main-container">
     <form method="post">
         <div class="select-container">
-            <h5>Выберите картину для редактирования:</h5>
+            <h5>Select a picture to edit:</h5>
             <input type="search" list="arts" class="form-control search" id="selectArt" name="artId" asp-for="SelectedArt.Id"/>
             <datalist id="arts">
                 @foreach (var art in Model.Arts)
@@ -25,7 +25,7 @@
                     <option value="@art.Id" label="@art.Name, @art.DateOfCreation, @art.Id"></option>
                 }
             </datalist>
-            <button type="submit" class="btn btn-primary select-button-inline" asp-page-handler="FindContent">Изменить</button>
+            <button type="submit" class="btn btn-primary select-button-inline" asp-page-handler="FindContent">Change</button>
         </div>
     </form>
     <div class="container-preview">
@@ -34,14 +34,14 @@
                 <td>
                     <div class="container__image">
                         <input asp-for="SelectedArt.Id" hidden="hidden"/>
-                        <h5 class="form-label">Картина:</h5>
+                        <h5 class="form-label">Picture:</h5>
                         @if (Model.SelectedArt.IconPath.IsNullOrEmpty())
                         {
                             <img class="art-preview" id="artPicture" src="" alt=""/>
                         }
                         else
                         {
-                            <img class="art-preview" src="@Model.SelectedArt.IconPath" alt="загруженная картина"/>
+                            <img class="art-preview" src="@Model.SelectedArt.IconPath" alt="upload picture"/>
                         }
                         <div class="margin20">
                             <input asp-for="SelectedArt.IconPath" hidden="hidden"/>
@@ -52,13 +52,13 @@
                                    onchange="document.getElementById('artPicture').src = window.URL.createObjectURL(this.files[0])"/>
                         </div>
                         <div class="margin20 inline">
-                            <h6>Название:</h6>
+                            <h6>Name:</h6>
                             <input type="text" asp-for="SelectedArt.Name" class="form-control input"/>
-                            <h6 class="margin10">Размер:</h6>
+                            <h6 class="margin10">Size:</h6>
                             <input type="text" asp-for="SelectedArt.Size" class="form-control"/>
-                            <h6 class="margin10">Дата создания:</h6>
+                            <h6 class="margin10">Date of creation:</h6>
                             <input type="text" asp-for="SelectedArt.DateOfCreation" class="form-control"/>
-                            <h6 class="margin10">Жанр:</h6>
+                            <h6 class="margin10">Genre:</h6>
                             <input list="genres" class="form-control" asp-for="SelectedArt.GenreId"/>
                             <datalist id="genres">
                                 @foreach (var genre in Model.Genres)
@@ -66,7 +66,7 @@
                                     <option value="@genre.Id" label="@genre.Name"></option>
                                 }
                             </datalist>
-                            <h6 class="margin10">Художник:</h6>
+                            <h6 class="margin10">Artist:</h6>
                             <input list="artists" class="form-control" asp-for="SelectedArt.ArtistId"/>
                             <datalist id="artists">
                                 @foreach (var artist in Model.Artists)
@@ -74,25 +74,25 @@
                                     <option value="@artist.Id" label="@artist.Name"></option>
                                 }
                             </datalist>
-                            <h6 class="margin10">Цена:</h6>
+                            <h6 class="margin10">Price:</h6>
                             <input class="form-control" asp-for="SelectedArt.Price"/>
                         </div>
                     </div>
                 </td>
                 <td>
                     <div class="container__text">
-                        <h6>Описание картины:</h6>
-                        <textarea class="form-control text"  rows="7" placeholder="Описание" asp-for="SelectedArt.Description"></textarea>
+                        <h6>Picture description:</h6>
+                        <textarea class="form-control text"  rows="7" placeholder="Description" asp-for="SelectedArt.Description"></textarea>
                     </div>
                     <div class="control-container">
                     @if (Model.SelectedArt.Id.IsNullOrEmpty())
                     {
-                        <button type="submit" class="btn btn-primary select-button-inline control-button" asp-page-handler="CreateArt">Сохранить</button>
+                        <button type="submit" class="btn btn-primary select-button-inline control-button" asp-page-handler="CreateArt">Save</button>
                     }
                     else
                     {
-                        <button type="submit" class="btn btn-primary select-button-inline control-button" asp-page-handler="UpdateArt">Обновить</button>
-                        <button type="submit" class="btn btn-danger select-button-inline control-button" asp-page-handler="DeleteArt">Удалить</button>
+                        <button type="submit" class="btn btn-primary select-button-inline control-button" asp-page-handler="UpdateArt">Update</button>
+                        <button type="submit" class="btn btn-danger select-button-inline control-button" asp-page-handler="DeleteArt">Delete</button>
                     }
                     </div>
                 </td>
@@ -103,7 +103,7 @@
     <div class="container-preview">
         <form method="post">
             <div class="select-container">
-                <h5>Выберите художника для редактирования:</h5>
+                <h5>Select an artist to edit:</h5>
                 <input type="search" list="selectArtists" class="form-control search" id="selectArtist" name="artistId" asp-for="SelectedArtist.Id"/>
                 <datalist id="selectArtists">
                     @foreach (var artist in Model.Artists)
@@ -111,7 +111,7 @@
                         <option value="@artist.Id" label="@artist.Name"></option>
                     }
                 </datalist>
-                <button type="submit" class="btn btn-primary select-button-inline" asp-page-handler="FindContent">Изменить</button>
+                <button type="submit" class="btn btn-primary select-button-inline" asp-page-handler="FindContent">Change</button>
             </div>
         </form>
         <div class="container-preview">
@@ -120,14 +120,14 @@
                 <td>
                     <div class="container__image">
                         <input asp-for="SelectedArtist.Id" hidden="hidden"/>
-                        <h5 class="form-label">Художник:</h5>
+                        <h5 class="form-label">Artist:</h5>
                         @if (Model.SelectedArtist.IconPath == null)
                         {
                             <img class="art-preview" id="artistPicture" src="" alt=""/>
                         }
                         else
                         {
-                            <img class="art-preview" id="artistPicture" src="@Model.SelectedArtist.IconPath" alt="загруженная картина"/>
+                            <img class="art-preview" id="artistPicture" src="@Model.SelectedArtist.IconPath" alt="upload picture"/>
                         }
                         <div class="margin20">
                             <input asp-for="SelectedArtist.IconPath" hidden="hidden"/>
@@ -138,27 +138,27 @@
                                    onchange="document.getElementById('artistPicture').src = window.URL.createObjectURL(this.files[0])"/>
                         </div>
                         <div class="margin20">
-                            <h6 class="margin10">Имя:</h6>
+                            <h6 class="margin10">Name:</h6>
                             <input type="text" asp-for="SelectedArtist.Name" class="form-control"/>
-                            <h6 class="margin10">Страна:</h6>
+                            <h6 class="margin10">Country:</h6>
                             <input type="text" asp-for="SelectedArtist.Country" class="form-control"/>
                         </div>
                     </div>
                 </td>
                 <td>
                     <div class="container__text margin10">
-                        <h6>Описание художника:</h6>
+                        <h6>Artist description:</h6>
                         <textarea class="form-control" id="text" rows="7" placeholder="Описание" asp-for="SelectedArtist.Description"></textarea>
                     </div>
                     <div class="control-container">
                         @if (Model.SelectedArtist.Id.IsNullOrEmpty())
                         {
-                            <button type="submit" class="btn btn-primary select-button-inline control-button" asp-page-handler="CreateArtist">Сохранить</button>
+                            <button type="submit" class="btn btn-primary select-button-inline control-button" asp-page-handler="CreateArtist">Save</button>
                         }
                         else
                         {
-                            <button type="submit" class="btn btn-primary select-button-inline control-button" asp-page-handler="UpdateArtist">Обновить</button>
-                            <button type="submit" class="btn btn-danger select-button-inline control-button" asp-page-handler="DeleteArtist">Удалить</button>
+                            <button type="submit" class="btn btn-primary select-button-inline control-button" asp-page-handler="UpdateArtist">Update</button>
+                            <button type="submit" class="btn btn-danger select-button-inline control-button" asp-page-handler="DeleteArtist">Delete</button>
                         }
                     </div>
                 </td>

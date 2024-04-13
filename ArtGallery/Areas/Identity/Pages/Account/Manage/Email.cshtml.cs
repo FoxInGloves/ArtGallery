@@ -71,7 +71,7 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [EmailAddress]
-            [Display(Name = "Новый email")]
+            [Display(Name = "New email")]
             public string NewEmail { get; set; }
         }
 

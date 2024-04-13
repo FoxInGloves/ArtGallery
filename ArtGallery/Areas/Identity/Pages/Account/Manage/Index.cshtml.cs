@@ -50,7 +50,7 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
-            [Display(Name = "Имя пользователя")]
+            [Display(Name = "User name")]
             public string UserName { get; set; }
                 
             /// <summary>
