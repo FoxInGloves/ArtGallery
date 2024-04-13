@@ -1,7 +1,4 @@
-#nullable disable
-
 using System.ComponentModel.DataAnnotations;
-using Humanizer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -34,9 +31,9 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
-            [StringLength(30, MinimumLength = 1, ErrorMessage = "Длина {0} должна быть не менее {2} и не более {1} символов.")]
-            [Display(Name = "Новая роль")]
-            public string NewRole { get; set; }
+            [StringLength(30, MinimumLength = 1, ErrorMessage = "The length of {0} must be at least {2} and no more than {1} characters.")]
+            [Display(Name = "New role")]
+            public string? NewRole { get; set; }
         }
         
         private async Task LoadAsync()
@@ -54,18 +51,24 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var newRole = Input.NewRole.Trim();
+            var newRole = Input.NewRole?.Trim();
+
+            if (string.IsNullOrEmpty(newRole))
+            {
+                StatusMessage = "Error, a role cannot be added";
+                return RedirectToPage();
+            }
             
             var roles = await _roleManager.Roles.Select(x => x.Name).ToListAsync();
             if (roles.Contains(newRole))
             {
                 //TODO Сменить Error на Ошибка
-                StatusMessage = "Error Такая роль уже существует";
+                StatusMessage = "Error, such a role already exists";
                 return Page();
             }
             
             await _roleManager.CreateAsync(new IdentityRole(newRole));
-            StatusMessage = $"Роль '{newRole}' добавлена";
+            StatusMessage = $"Role '{newRole}' added";
             _logger.LogInformation("New role added successfully");
             return RedirectToPage();
         }
@@ -79,12 +82,12 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
 
             if (role == null)
             {
-                StatusMessage = "Error такой роли не существует!";
+                StatusMessage = "Error that role doesn't exist!";
                 return Page();
             }
 
             await _roleManager.DeleteAsync(role);
-            StatusMessage = $"Роль '{role}' успешно удалена.";
+            StatusMessage = $"Role '{role}' successfully deleted.";
             _logger.LogInformation("RoleModel deleted");
             return RedirectToPage();
         }
