@@ -5,6 +5,7 @@ using ArtGallery.Models.Structs.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArtGallery.Areas.Identity.Pages.Account.Manage
 {
@@ -36,7 +37,6 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
         {
             var user = await _userManager.FindByIdAsync(userId);
             
-            Console.WriteLine(await _userManager.IsInRoleAsync(user, "Admin"));
             if (user == null)
             {
                 throw new NullReferenceException();
@@ -45,7 +45,7 @@ namespace ArtGallery.Areas.Identity.Pages.Account.Manage
             }
             //ViewBag.UserName = user.UserName;
             var roles = new List<RoleModel>();
-            foreach (var role in _roleManager.Roles)
+            foreach (var role in await _roleManager.Roles.ToListAsync())
             {
                 var userRolesViewModel = new RoleModel()
                 {
