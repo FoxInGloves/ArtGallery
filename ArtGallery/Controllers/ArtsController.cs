@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using ArtGallery.Data.Abstractions;
-using ArtGallery.Data.Implementations;
 using ArtGallery.Models;
 using ArtGallery.Models.Services;
 using ArtGallery.Models.Structs.Dto;
@@ -40,10 +39,10 @@ public class ArtsController : Controller
     public async Task<IActionResult> Artist(string idArtist)
     {
         var artist = await _unitOfWork.ArtistRepository.GetByIdAsync(idArtist);
-
+        
         if (artist == null)
         {
-            return NoContent();
+            return Redirect($"/Arts/Error/");
         }
 
         var artistToView = _converterToDto.Convert(artist);
@@ -54,6 +53,11 @@ public class ArtsController : Controller
     public async Task<IActionResult> Picture(string artId)
     {
         var art = await _unitOfWork.ArtRepository.GetByIdAsync(artId);
+        
+        if (art == null)
+        {
+            return Redirect($"/Arts/Error/");
+        }
 
         var artToView = _converterToDto.Convert(art);
         
@@ -99,11 +103,5 @@ public class ArtsController : Controller
         }
 
         return myGenres;
-    }
-    
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
