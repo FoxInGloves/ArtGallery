@@ -8,6 +8,7 @@
 
 <html lang="ru">
 <head>
+    <title>Home page</title>
     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/element.css" asp-append-version="true"/>
     <script src="~/js/like-button.js"></script>
@@ -15,12 +16,12 @@
 <body onload="like()">
 <div>
     <div class="index__banner">
-        <img class="index__img" src="~/images/banner/banner_1.jpg"/>
-        <img class="index__img" src="~/images/banner/banner_2.jpg"/>
-        <img class="index__img" src="~/images/banner/banner_3.jpg"/>
+        <img class="index__img" src="~/images/banner/banner_1.jpg" alt="banner"/>
+        <img class="index__img" src="~/images/banner/banner_2.jpg" alt="banner"/>
+        <img class="index__img" src="~/images/banner/banner_3.jpg" alt="banner"/>
     </div>
     <div class="index__title">
-        <strong><h2>Популярные жанры</h2></strong>
+        <strong><h2>Popular genres</h2></strong>
     </div>
     <div class="index-container">
     <ul class="index-ul">
@@ -42,7 +43,7 @@
     </div>
     <div class="element-container">
         <div class="index__title" id="title__background">
-            <strong><h2>Новинки</h2></strong>
+            <strong><h2>Novelties</h2></strong>
         </div>
         <ul class="element-ul">
             @foreach (var art in Model.Arts)
@@ -62,15 +63,15 @@
                         <div class="element-block__title">@art.Name</div>
                         <div class="element-block__param">
                             <div>
-                                <div class="element-block__artist">Художник:</div>
+                                <div class="element-block__artist">Artist:</div>
                                 <div class="element-block__artist">
                                     <a asp-controller="Arts" asp-action="Artist" 
                                        asp-route-idArtist="@art.Artist?.Id">@art.Artist?.Name</a>
                                 </div>
                             </div>
-                            <div class="element-block__size">Размер: @art.Size</div>
+                            <div class="element-block__size">Size: @art.Size</div>
                             <div>
-                                <div class="element-block__price">Цена: @art.Price</div>
+                                <div class="element-block__price">Price: @art.Price</div>
                             </div>
                         </div>
                     </div>
