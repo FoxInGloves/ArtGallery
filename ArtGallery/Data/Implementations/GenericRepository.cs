@@ -41,7 +41,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 
     public virtual async Task DeleteAsync(object id)
     {
-        var entityToDelete = await _dbSet.FindAsync(id);
+        var entityToDelete = await GetByIdAsync(id);
         if (entityToDelete == null) return;
         await DeleteAsync(entityToDelete);
     }

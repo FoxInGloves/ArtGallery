@@ -8,13 +8,16 @@ namespace ArtGallery.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
+    public ApplicationDbContext()
+    {
+    }
+    
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
-        
     }
 
-    public DbSet<Art> Arts { get; set; }
+    public virtual DbSet<Art> Arts { get; set; }
     
     public DbSet<Artist> Artists { get; set; }
     
